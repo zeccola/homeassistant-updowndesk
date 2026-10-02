@@ -1,0 +1,96 @@
+{
+  "config": {
+    "flow_title": "{name}",
+    "step": {
+      "confirm": {
+        "title": "Add UpDown Desk",
+        "description": "Set up {name} ({address})?\n\nHome Assistant will connect and read the desk's calibration to confirm it is a supported controller. Close the phone app first: the desk accepts only one Bluetooth connection at a time."
+      },
+      "user": {
+        "title": "Add UpDown Desk",
+        "description": "Choose your desk controller. Close the phone app first: the desk accepts only one Bluetooth connection at a time.",
+        "data": {
+          "address": "Device"
+        }
+      },
+      "manual": {
+        "title": "Add UpDown Desk",
+        "description": "No desk controller was discovered. Enter its Bluetooth address by hand.",
+        "data": {
+          "address": "Bluetooth address"
+        }
+      }
+    },
+    "error": {
+      "cannot_connect": "Could not talk to the desk. Make sure the phone app is closed and the desk is powered, then try again.",
+      "not_found": "The desk is not in range of any Bluetooth adapter or proxy.",
+      "unsupported_model": "The desk replied, but reported a controller model this integration does not know how to convert to centimetres. Please open an issue with the model index from the logs."
+    },
+    "abort": {
+      "already_configured": "This desk is already set up.",
+      "no_devices_found": "No desk controllers found."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "UpDown Desk options",
+        "data": {
+          "poll_interval": "Height poll interval (0 disables polling)",
+          "keep_connected": "Stay connected",
+          "follow_handshake": "Track the height continuously",
+          "quiet_start": "Quiet hours start",
+          "quiet_end": "Quiet hours end",
+          "move_timeout": "Movement timeout"
+        },
+        "data_description": {
+          "poll_interval": "How often to ask the desk for its height in the background.",
+          "keep_connected": "Hold the Bluetooth link open. The desk allows only one connection, so this blocks the phone app. Turn it off to connect only when a command is sent.",
+          "follow_handshake": "Answer the desk's idle handshake with a height query, so handset movements show up straight away. This keeps the desk's LED display awake.",
+          "quiet_start": "Background polling and height tracking are suspended during quiet hours, so the desk's display stays dark overnight. Leave both times empty to disable.",
+          "quiet_end": "End of the quiet window.",
+          "move_timeout": "Give up and stop the desk if a move takes longer than this."
+        }
+      }
+    }
+  },
+  "entity": {
+    "binary_sensor": {
+      "moving": { "name": "Moving" },
+      "problem": { "name": "Fault" },
+      "connected": { "name": "Bluetooth connection" }
+    },
+    "button": {
+      "sit": { "name": "Sit preset" },
+      "middle": { "name": "Middle preset" },
+      "stand": { "name": "Stand preset" },
+      "stop": { "name": "Stop" },
+      "nudge_up": { "name": "Nudge up" },
+      "nudge_down": { "name": "Nudge down" }
+    },
+    "number": {
+      "target_height": { "name": "Target height" }
+    },
+    "sensor": {
+      "height": { "name": "Height" },
+      "run_hall": { "name": "Hall counter" },
+      "error": { "name": "Last error" }
+    }
+  },
+  "services": {
+    "jog": {
+      "name": "Jog",
+      "description": "Hold the desk's up or down motor for a short time, then stop. Useful for fine adjustments.",
+      "fields": {
+        "direction": {
+          "name": "Direction",
+          "description": "Which way to move."
+        },
+        "duration": {
+          "name": "Duration",
+          "description": "How long to hold the motor, in seconds. Capped at 3 seconds."
+        }
+      }
+    }
+  }
+}

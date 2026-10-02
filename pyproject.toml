@@ -1,0 +1,23 @@
+[tool.ruff]
+target-version = "py313"
+line-length = 92
+
+[tool.ruff.lint]
+select = ["F", "E", "W", "I", "UP", "B", "SIM", "RUF", "D"]
+ignore = [
+  "D203",  # conflicts with D211
+  "D213",  # conflicts with D212
+  "E501",  # long lines are handled by the formatter
+]
+
+[tool.ruff.lint.isort]
+combine-as-imports = true
+force-sort-within-sections = true
+
+[tool.ruff.lint.per-file-ignores]
+"tests/*" = ["D100", "D101", "D102", "D103", "D104", "D105", "D107"]
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+asyncio_default_fixture_loop_scope = "function"
+testpaths = ["tests"]
